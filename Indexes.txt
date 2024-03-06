@@ -1,0 +1,16 @@
+https://habr.com/ru/post/247373/
+https://docs.microsoft.com/ru-ru/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described?view=sql-server-ver16
+https://coderlessons.com/tutorials/bazy-dannykh/osnovy-subd/18-klasternyi-protiv-neklasterizovannogo-indeksa
+
+Clustered index holds key/value pair where value is real value
+Important note - All values are ordered (asc or desc), therefore table or view can contain only 1 clustered index
+
+Non-Clustered index holds key/value pair where value is a pointer to real value
+
+A,B,C
+
+Index(B, C)
+Index(A, B, C) A-B, A-C, ABC
+
+EntityFramework:
+https://stackoverflow.com/questions/49432203/how-to-stop-ef-core-from-indexing-all-foreign-keys

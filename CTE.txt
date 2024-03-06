@@ -1,0 +1,43 @@
+https://learnsql.com/blog/what-is-common-table-expression/
+https://www.sqlshack.com/sql-server-common-table-expressions-cte/
+
+The common table expression (CTE) is a powerful construct in SQL that helps simplify a query.
+CTEs work as virtual tables (with records and columns), created during the execution of a query, used by the query, and eliminated after query execution.
+CTEs often act as a bridge to transform the data in source tables to the format expected by the query.
+
+--Recursive CTE
+Declare @RowNo int =1;
+;with ROWCTE as  
+   (  
+      SELECT @RowNo as ROWNO    
+		UNION ALL  
+      SELECT  ROWNO+1  
+      FROM  ROWCTE  
+      WHERE RowNo < 10
+    )  
+ 
+SELECT * FROM ROWCTE
+
+--Example from DB
+WITH UserProjectCTE as 
+	(
+		SELECT TOP 20
+			[u].[FirstName], [u].[LastName], [p].[Name] as 'Project'
+		FROM 
+			[UserProjects] as up
+		JOIN
+			[Users] as [u] on [up].[UserId] = [u].Id
+		Join
+			[Projects] as [p] on [up].[ProjectId] = [p].id
+		ORDER BY -- Order By doesn't work without TOP or OFFSET
+			[p].[Name]
+	)
+
+SELECT * From UserProjectCTE
+
+ CTE vs Temp table
+-Temp Tables are physically created in the tempdb database. These tables act as the normal table and also can have constraints, an index like normal tables.
+
+-CTE is a named temporary result set which is used to manipulate the complex sub-queries data. This exists for the scope of a statement. This is created in memory rather than the Tempdb database. You cannot create an index on CTE.
+
+-Table Variable acts like a variable and exists for a particular batch of query execution. It gets dropped once it comes out of a batch. This is also created in the tempdb database but not the memory.

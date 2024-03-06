@@ -1,0 +1,16 @@
+https://habr.com/ru/post/64524/
+
+Denormalization - intentional violation of normals forms, in order to increase performance
+
+
+I. Why it would be necessary ?
+
+1) A lot of JOINs in query (e.g 10 joins and more)
+2) Calculated values
+3) Heavy values (Blob, text(NVARCHAR(MAX)), etc.)
+
+II. Pros and cons
+
+It is worth to perform denormalization if wasted time for consistency support is less than 
+time needed to execute the original query.
+It is important to stay balanced between performance and consistency/redundancy of data

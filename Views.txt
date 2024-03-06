@@ -1,0 +1,32 @@
+https://docs.microsoft.com/en-us/sql/relational-databases/views/views?view=sql-server-ver16
+https://www.geeksforgeeks.org/sql-views/
+https://www.tutorialspoint.com/sql/sql-using-views.htm
+
+A view is nothing more than a SQL statement that is stored in the database with an associated name. 
+A view is actually a composition of a table in the form of a predefined SQL query.
+
+-- Example
+DROP VIEW IF EXISTS UserProjectsView;
+GO
+
+CREATE VIEW UserProjectsView AS
+	SELECT TOP 20
+		[u].[FirstName], [u].[LastName], [p].[Name] as 'Project'
+	FROM 
+		[UserProjects] as up
+	JOIN
+		[Users] as [u] on [up].[UserId] = [u].Id
+	Join
+		[Projects] as [p] on [up].[ProjectId] = [p].id
+	ORDER BY -- Order By doesn't work without TOP or OFFSET
+		[p].[Name]
+GO
+
+-- Query the view  
+SELECT TOP 100 * FROM UserProjectsView;
+
+
+Views vs Temp table
+Views is about processing query each time
+Temp table is about storing data
+https://stackoverflow.com/questions/16897323/view-or-temporary-table-which-to-use-in-ms-sql-server
